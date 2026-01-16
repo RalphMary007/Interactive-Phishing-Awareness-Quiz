@@ -1,0 +1,7 @@
+body { font-family: 'Arial', sans-serif; background: linear-gradient(to right, #007bff, #00bfff); color: #fff; }
+.card { max-width: 800px; margin: auto; border-radius: 15px; background: #fff; color: #000; }
+.btn { padding: 15px; font-size: 18px; transition: 0.3s; }
+.btn:hover { transform: scale(1.05); }
+.progress { height: 20px; }
+#feedback { color: #007bff; animation: fadeIn 0.5s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
