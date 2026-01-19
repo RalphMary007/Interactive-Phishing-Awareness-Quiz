@@ -92,7 +92,7 @@ function answer(isPhishing) {
     }, 2000);
 }
 
-function showResults(score, totalQuestions) {
+function showResults() {
     const container = document.querySelector('.card-body');
     let grade = "";
     let message = "";
@@ -116,16 +116,16 @@ function showResults(score, totalQuestions) {
         color = "#dc3545"; // red
     }
 
-    // CLEAN template literal — correct syntax, no stray characters
+    // This is the CLEAN, correct template literal — no stray characters
     container.innerHTML = `
-  <h1 class="text-center">Quiz Complete!</h1>
-  <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
-  <h3 class="text-center" style="color: ${color}">${grade}</h3>
-  <p class="text-center fs-5" style="color: ${color}">${message}</p>
-  <div class="text-center mt-4">
-    <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
-  </div>
-`;
+        <h1 class="text-center">Quiz Complete!</h1>
+        <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
+        <h3 class="text-center" style="color: \( {color};"> \){grade}</h3>
+        <p class="text-center fs-5" style="color: \( {color};"> \){message}</p>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
+        </div>
+    `;
 }
 
 // Start the quiz
