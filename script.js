@@ -1,5 +1,6 @@
+// All questions in one pool (no predictable order)
 const allQuestions = [
-    // Easy
+    // Easy (8)
     { text: "Email: 'Your account is suspended. Click to verify.' From unknown sender.", isPhishing: true, difficulty: 'easy' },
     { text: "Bank statement from official email.", isPhishing: false, difficulty: 'easy' },
     { text: "Urgent: Tax refund available. Provide details.", isPhishing: true, difficulty: 'easy' },
@@ -9,7 +10,7 @@ const allQuestions = [
     { text: "Update payment info or lose access.", isPhishing: true, difficulty: 'easy' },
     { text: "Transaction alert from app.", isPhishing: false, difficulty: 'easy' },
 
-    // Medium
+    // Medium (8)
     { text: "Spoofed bank transfer request with urgent language.", isPhishing: true, difficulty: 'medium' },
     { text: "Legitimate loan offer from known lender.", isPhishing: false, difficulty: 'medium' },
     { text: "Investment opportunity with high returns.", isPhishing: true, difficulty: 'medium' },
@@ -19,7 +20,7 @@ const allQuestions = [
     { text: "Charity donation request post-disaster.", isPhishing: true, difficulty: 'medium' },
     { text: "Policy update email.", isPhishing: false, difficulty: 'medium' },
 
-    // Hard
+    // Hard (8)
     { text: "AI-generated deepfake voice call requesting transfer.", isPhishing: true, difficulty: 'hard' },
     { text: "Official regulatory compliance email.", isPhishing: false, difficulty: 'hard' },
     { text: "Vishing call mimicking bank fraud dept.", isPhishing: true, difficulty: 'hard' },
@@ -30,7 +31,7 @@ const allQuestions = [
     { text: "System update notification.", isPhishing: false, difficulty: 'hard' }
 ];
 
-// Fisher-Yates shuffle to randomize the entire order every time
+// Fisher-Yates shuffle (randomises order every load)
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -39,27 +40,26 @@ function shuffle(array) {
     return array;
 }
 
-// Shuffle the full question pool once when the page loads
+// Shuffle once when page loads
 let shuffledQuestions = shuffle([...allQuestions]);
 
 let currentQuestion = 0;
 let score = 0;
-const totalQuestions = 20; // Take first 20 from shuffled pool
+const totalQuestions = 20; // We take the first 20 from shuffled pool
 
 function loadQuestion() {
     if (currentQuestion < totalQuestions) {
-        // Adaptive logic: if doing well after question 6, increase chance of hard questions
+        // Adaptive: after Q6, if strong performance, 70% chance to pull harder question
         if (currentQuestion >= 6 && score / currentQuestion > 0.7) {
             const remaining = shuffledQuestions.slice(currentQuestion);
             const hardRemaining = remaining.filter(q => q.difficulty === 'hard');
             if (hardRemaining.length > 0 && Math.random() < 0.7) {
-                // Pick a random hard question from remaining
-                const randomIndex = currentQuestion + Math.floor(Math.random() * remaining.length);
-                if (shuffledQuestions[randomIndex].difficulty === 'hard') {
-                    document.getElementById('question').textContent = shuffledQuestions[randomIndex].text;
-                    // Swap to bring hard question to current position (optional for simplicity)
-                    [shuffledQuestions[currentQuestion], shuffledQuestions[randomIndex]] = 
-                    [shuffledQuestions[randomIndex], shuffledQuestions[currentQuestion]];
+                const randomHardIndex = currentQuestion + Math.floor(Math.random() * remaining.length);
+                if (shuffledQuestions[randomHardIndex].difficulty === 'hard') {
+                    document.getElementById('question').textContent = shuffledQuestions[randomHardIndex].text;
+                    // Swap to current position (keeps flow simple)
+                    [shuffledQuestions[currentQuestion], shuffledQuestions[randomHardIndex]] = 
+                    [shuffledQuestions[randomHardIndex], shuffledQuestions[currentQuestion]];
                 } else {
                     document.getElementById('question').textContent = shuffledQuestions[currentQuestion].text;
                 }
@@ -100,19 +100,19 @@ function showResults() {
 
     if (score >= 15) {
         grade = "Excellent Phishing Awareness";
-        message = "Outstanding performance! You have sharp detection skills and strong awareness — you're well protected against phishing threats.";
+        message = "Outstanding! You consistently spotted the red flags — excellent awareness and sharp instincts. You're well protected.";
         color = "#28a745"; // green
     } else if (score >= 10) {
         grade = "Average Phishing Awareness";
-        message = "Good effort — you caught many phishing attempts, but there’s still room to sharpen your skills. Keep practicing!";
+        message = "Good job — you identified many phishing attempts. There's still room to grow, especially with the trickier ones. Keep practicing!";
         color = "#ffc107"; // yellow/orange
     } else if (score >= 5) {
         grade = "Low Phishing Awareness";
-        message = "You’ve made a solid start. Your current awareness is developing — focus on spotting urgency, spoofing, and unusual requests next time.";
+        message = "You've completed the quiz — that's a strong first step! Your current awareness is still building. Focus on urgency tricks and spoofed details next time.";
         color = "#fd7e14"; // orange-red
     } else {
         grade = "Poor Phishing Awareness";
-        message = "This is a valuable learning moment. Phishing can be very deceptive — take time to review common red flags and retake when ready.";
+        message = "This is a helpful starting point. Phishing can be very convincing — take some time to review common signs and retake the quiz when you're ready.";
         color = "#dc3545"; // red
     }
 
