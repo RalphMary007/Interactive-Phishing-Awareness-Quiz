@@ -92,7 +92,7 @@ function answer(isPhishing) {
     }, 2000);
 }
 
-function showResults() {
+function showResults(score, totalQuestions) {
     const container = document.querySelector('.card-body');
     let grade = "";
     let message = "";
