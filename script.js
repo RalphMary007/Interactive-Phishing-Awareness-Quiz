@@ -1,9 +1,7 @@
-// === Phishing Awareness Quiz - Final Fixed Version ===
-// No stray braces, no artifacts, full randomisation, adaptive difficulty, clean results
+// === Diagnostic Version: No grade/message to test clean output ===
 
-// All questions in one pool
 const allQuestions = [
-    // Easy
+    // Easy (8)
     { text: "Email: 'Your account is suspended. Click to verify.' From unknown sender.", isPhishing: true, difficulty: 'easy' },
     { text: "Bank statement from official email.", isPhishing: false, difficulty: 'easy' },
     { text: "Urgent: Tax refund available. Provide details.", isPhishing: true, difficulty: 'easy' },
@@ -13,7 +11,7 @@ const allQuestions = [
     { text: "Update payment info or lose access.", isPhishing: true, difficulty: 'easy' },
     { text: "Transaction alert from app.", isPhishing: false, difficulty: 'easy' },
 
-    // Medium
+    // Medium (8)
     { text: "Spoofed bank transfer request with urgent language.", isPhishing: true, difficulty: 'medium' },
     { text: "Legitimate loan offer from known lender.", isPhishing: false, difficulty: 'medium' },
     { text: "Investment opportunity with high returns.", isPhishing: true, difficulty: 'medium' },
@@ -23,7 +21,7 @@ const allQuestions = [
     { text: "Charity donation request post-disaster.", isPhishing: true, difficulty: 'medium' },
     { text: "Policy update email.", isPhishing: false, difficulty: 'medium' },
 
-    // Hard
+    // Hard (8)
     { text: "AI-generated deepfake voice call requesting transfer.", isPhishing: true, difficulty: 'hard' },
     { text: "Official regulatory compliance email.", isPhishing: false, difficulty: 'hard' },
     { text: "Vishing call mimicking bank fraud dept.", isPhishing: true, difficulty: 'hard' },
@@ -50,10 +48,8 @@ let currentQuestion = 0;
 let score = 0;
 const totalQuestions = 20;
 
-// Load next question
 function loadQuestion() {
     if (currentQuestion < totalQuestions) {
-        // Adaptive logic
         if (currentQuestion >= 6 && score / currentQuestion > 0.7) {
             const remaining = shuffledQuestions.slice(currentQuestion);
             const hardRemaining = remaining.filter(q => q.difficulty === 'hard');
@@ -61,7 +57,6 @@ function loadQuestion() {
                 const randomIndex = currentQuestion + Math.floor(Math.random() * remaining.length);
                 if (shuffledQuestions[randomIndex].difficulty === 'hard') {
                     document.getElementById('question').textContent = shuffledQuestions[randomIndex].text;
-                    // Swap for smooth flow
                     [shuffledQuestions[currentQuestion], shuffledQuestions[randomIndex]] = 
                     [shuffledQuestions[randomIndex], shuffledQuestions[currentQuestion]];
                 } else {
@@ -79,12 +74,10 @@ function loadQuestion() {
     updateProgress();
 }
 
-// Update progress bar
 function updateProgress() {
     document.getElementById('progress-bar').style.width = (currentQuestion / totalQuestions * 100) + '%';
 }
 
-// Handle answer
 function answer(isPhishing) {
     const current = shuffledQuestions[currentQuestion];
     const correct = current.isPhishing === isPhishing;
@@ -98,42 +91,17 @@ function answer(isPhishing) {
     }, 2000);
 }
 
-// FIXED showResults - clean template literal, no stray characters
+// Diagnostic version: NO grade or message — just score to test clean output
 function showResults() {
     const container = document.querySelector('.card-body');
 
-    let grade = "";
-    let message = "";
-    let color = "";
-
-    if (score >= 15) {
-        grade = "Excellent Phishing Awareness";
-        message = "Outstanding! You consistently spotted the red flags — excellent awareness and sharp instincts. You're well protected.";
-        color = "#28a745";
-    } else if (score >= 10) {
-        grade = "Average Phishing Awareness";
-        message = "Good job — you caught many phishing attempts. There's still room to grow, especially with the trickier ones. Keep practicing!";
-        color = "#ffc107";
-    } else if (score >= 5) {
-        grade = "Low Phishing Awareness";
-        message = "You've completed the quiz — that's a strong first step! Your current awareness is still building. Focus on urgency tricks and spoofed details next time.";
-        color = "#fd7e14";
-    } else {
-        grade = "Poor Phishing Awareness";
-        message = "This is a helpful wake-up call. Phishing can be very deceptive — take time to review common signs and retake when you're ready.";
-        color = "#dc3545";
-    }
-
-    // Clean, correct template literal
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
         <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
-        <h3 class="text-center" style="color: \( {color};"> \){grade}</h3>
-        <p class="text-center fs-5" style="color: \( {color};"> \){message}</p>
         <div class="text-center mt-4">
             <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
         </div>
     `;
 }
 
-// Do NOT call loadQuestion() here — it starts only after "Start Quiz"
+// Start the quiz (called only after "Start Quiz" click in index.html)
