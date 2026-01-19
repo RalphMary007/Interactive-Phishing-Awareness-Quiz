@@ -1,7 +1,6 @@
-/* Base styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0d6efd, #00c6ff); /* Blue finance/trust gradient */
+    background: linear-gradient(135deg, #0d6efd, #00c6ff);
     color: #333;
     min-height: 100vh;
     margin: 0;
@@ -11,13 +10,11 @@ body {
     justify-content: center;
 }
 
-/* Quiz container */
 .container {
     max-width: 900px;
     width: 100%;
 }
 
-/* Card styling */
 .card {
     border: none;
     border-radius: 20px;
@@ -26,19 +23,16 @@ body {
     background: #ffffff;
 }
 
-/* Card body */
 .card-body {
     padding: 2.5rem;
 }
 
-/* Title */
 .card-title {
     color: #0d6efd;
     font-weight: 700;
     margin-bottom: 1.5rem;
 }
 
-/* Question text */
 .lead {
     font-size: 1.4rem;
     line-height: 1.6;
@@ -46,7 +40,6 @@ body {
     color: #333;
 }
 
-/* Buttons */
 .d-grid .btn {
     padding: 16px;
     font-size: 1.2rem;
@@ -75,7 +68,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Feedback text */
 #feedback {
     font-size: 1.5rem;
     font-weight: bold;
@@ -83,7 +75,6 @@ body {
     animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Progress bar */
 .progress {
     height: 12px;
     border-radius: 10px;
@@ -96,16 +87,14 @@ body {
     transition: width 0.4s ease;
 }
 
-/* Score display */
 .mt-2 {
     font-size: 1.3rem;
     font-weight: 600;
 }
 
-/* Final results screen enhancements */
+/* Final results screen */
 .quiz-complete h1 {
     color: #0d6efd;
-    font-weight: 700;
     margin-bottom: 1.5rem;
 }
 
@@ -124,17 +113,13 @@ body {
 .btn-retake {
     padding: 14px 50px;
     font-size: 1.3rem;
-    font-weight: 600;
-    border-radius: 12px;
 }
 
-/* Fade-in animation for feedback */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile responsiveness */
 @media (max-width: 576px) {
     .card-body {
         padding: 1.8rem;
