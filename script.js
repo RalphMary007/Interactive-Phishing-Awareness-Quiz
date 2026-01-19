@@ -31,7 +31,7 @@ const allQuestions = [
     { text: "System update notification.", isPhishing: false, difficulty: 'hard' }
 ];
 
-// Shuffle function (Fisher-Yates)
+// Fisher-Yates shuffle (randomises order every load)
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -49,7 +49,7 @@ const totalQuestions = 20; // Take first 20 from shuffled pool
 
 function loadQuestion() {
     if (currentQuestion < totalQuestions) {
-        // Adaptive: after Q6, if strong score, 70% chance to pick harder remaining question
+        // Adaptive: after Q6, if strong score (>70%), 70% chance to pick harder remaining question
         if (currentQuestion >= 6 && score / currentQuestion > 0.7) {
             const remaining = shuffledQuestions.slice(currentQuestion);
             const hardRemaining = remaining.filter(q => q.difficulty === 'hard');
@@ -116,6 +116,7 @@ function showResults() {
         color = "#dc3545"; // red
     }
 
+    // Clean template literal - no stray braces or text
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
         <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
