@@ -5,3 +5,22 @@ body { font-family: 'Arial', sans-serif; background: linear-gradient(to right, #
 .progress { height: 20px; }
 #feedback { color: #007bff; animation: fadeIn 0.5s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* Final results enhancements */
+.quiz-complete h1 {
+    color: #007bff;
+    margin-bottom: 1.5rem;
+}
+.grade {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 1.5rem 0;
+}
+.message {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+.btn-retake {
+    padding: 14px 50px;
+    font-size: 1.3rem;
+}
