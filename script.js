@@ -1,3 +1,4 @@
+// --- Question Pools (unchanged) ---
 const easyQuestions = [
     { text: "Email: 'Your account is suspended. Click to verify.' From unknown sender.", isPhishing: true, difficulty: 'easy' },
     { text: "Bank statement from official email.", isPhishing: false, difficulty: 'easy' },
@@ -31,18 +32,50 @@ const hardQuestions = [
     { text: "System update notification.", isPhishing: false, difficulty: 'hard' }
 ];
 
-let questions = easyQuestions; // Start with easy
+// --- Combine all questions into one pool and shuffle ---
+let allQuestions = [
+    ...easyQuestions,
+    ...mediumQuestions,
+    ...hardQuestions
+];
+
+// Fisher-Yates (Knuth) shuffle function
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Shuffle once at the beginning
+allQuestions = shuffle(allQuestions);
+
 let currentQuestion = 0;
 let score = 0;
-let totalQuestions = 20;
+let totalQuestions = 20; // still 20 questions (you can increase if you want)
+
+// Adaptive threshold: after question 6, if performance is strong, pull more from harder questions
+const adaptiveThreshold = 0.7;
+const adaptiveStartAfter = 6;
 
 function loadQuestion() {
     if (currentQuestion < totalQuestions) {
-        if (score / currentQuestion > 0.7 && currentQuestion > 5) {
-            questions = mediumQuestions.concat(hardQuestions);
+        // Adaptive logic: if user is doing well early, increase chance of harder questions
+        if (currentQuestion >= adaptiveStartAfter && score / currentQuestion > adaptiveThreshold) {
+            // Filter remaining questions to prefer harder ones
+            const remaining = allQuestions.slice(currentQuestion);
+            const hardRemaining = remaining.filter(q => q.difficulty === 'hard');
+            if (hardRemaining.length > 0 && Math.random() < 0.7) { // 70% chance to pick hard
+                const randomHard = hardRemaining[Math.floor(Math.random() * hardRemaining.length)];
+                document.getElementById('question').textContent = randomHard.text;
+                // Note: we don't remove it here to keep it simple — real apps would splice
+            } else {
+                document.getElementById('question').textContent = allQuestions[currentQuestion].text;
+            }
+        } else {
+            document.getElementById('question').textContent = allQuestions[currentQuestion].text;
         }
-        const qIndex = currentQuestion % questions.length;
-        document.getElementById('question').textContent = questions[qIndex].text;
     } else {
         showResults();
     }
@@ -54,8 +87,8 @@ function updateProgress() {
 }
 
 function answer(isPhishing) {
-    const qIndex = currentQuestion % questions.length;
-    const correct = questions[qIndex].isPhishing === isPhishing;
+    const current = allQuestions[currentQuestion];
+    const correct = current.isPhishing === isPhishing;
     document.getElementById('feedback').textContent = correct ? 'Correct!' : 'Wrong!';
     if (correct) score++;
     document.getElementById('score').textContent = score;
@@ -67,33 +100,33 @@ function answer(isPhishing) {
 }
 
 function showResults() {
-    const container = document.getElementById('quiz-container') || document.querySelector('.card-body');
+    const container = document.querySelector('.card-body');
     let grade = "";
     let message = "";
     let color = "";
 
     if (score >= 15) {
         grade = "Excellent Phishing Awareness";
-        message = "Well done! You have excellent phishing awareness. Keep staying vigilant!";
+        message = "Outstanding! You demonstrated strong awareness and sharp detection skills. You're well-equipped to stay safe online.";
         color = "#28a745"; // green
     } else if (score >= 10) {
         grade = "Average Phishing Awareness";
-        message = "Well done! You have average phishing awareness. A bit more practice will make you stronger!";
+        message = "Solid effort! You spotted many signs, but there's still room to sharpen your skills. Review the tougher examples and try again.";
         color = "#ffc107"; // yellow/orange
     } else if (score >= 5) {
         grade = "Low Phishing Awareness";
-        message = "Well done for completing the quiz! You have low phishing awareness — consider reviewing the questions and retaking soon.";
+        message = "Good start — you've completed the quiz! Your current awareness is still developing. Focus on spotting urgency and spoofed details next time.";
         color = "#fd7e14"; // orange-red
     } else {
         grade = "Poor Phishing Awareness";
-        message = "Oops! You have poor phishing awareness right now. Don't worry — this is a great starting point to learn and improve. Retake the quiz after reviewing common signs of phishing!";
+        message = "This is a valuable wake-up call. Phishing tactics can be very deceptive — take time to study the common signs and retake the quiz when ready.";
         color = "#dc3545"; // red
     }
 
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
-        <p class="lead text-center">Your Score: <strong>${score}</strong> / ${totalQuestions}</p>
-        <h3 class="text-center" style="color: ${color};">Grade: ${grade}</h3>
+        <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
+        <h3 class="text-center" style="color: \( {color};"> \){grade}</h3>
         <p class="text-center fs-5" style="color: \( {color};"> \){message}</p>
         <div class="text-center mt-4">
             <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
