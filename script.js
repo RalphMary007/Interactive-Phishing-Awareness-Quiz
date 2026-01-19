@@ -44,7 +44,7 @@ function loadQuestion() {
         const qIndex = currentQuestion % questions.length;
         document.getElementById('question').textContent = questions[qIndex].text;
     } else {
-        document.getElementById('question').textContent = 'Quiz Complete! Final Score: ' + score;
+        showResults();
     }
     updateProgress();
 }
@@ -64,6 +64,41 @@ function answer(isPhishing) {
         document.getElementById('feedback').textContent = '';
         loadQuestion();
     }, 2000);
+}
+
+function showResults() {
+    const container = document.getElementById('quiz-container') || document.querySelector('.card-body');
+    let grade = "";
+    let message = "";
+    let color = "";
+
+    if (score >= 15) {
+        grade = "Excellent Phishing Awareness";
+        message = "Well done! You have excellent phishing awareness. Keep staying vigilant!";
+        color = "#28a745"; // green
+    } else if (score >= 10) {
+        grade = "Average Phishing Awareness";
+        message = "Well done! You have average phishing awareness. A bit more practice will make you stronger!";
+        color = "#ffc107"; // yellow/orange
+    } else if (score >= 5) {
+        grade = "Low Phishing Awareness";
+        message = "Well done for completing the quiz! You have low phishing awareness — consider reviewing the questions and retaking soon.";
+        color = "#fd7e14"; // orange-red
+    } else {
+        grade = "Poor Phishing Awareness";
+        message = "Oops! You have poor phishing awareness right now. Don't worry — this is a great starting point to learn and improve. Retake the quiz after reviewing common signs of phishing!";
+        color = "#dc3545"; // red
+    }
+
+    container.innerHTML = `
+        <h1 class="text-center">Quiz Complete!</h1>
+        <p class="lead text-center">Your Score: <strong>${score}</strong> / ${totalQuestions}</p>
+        <h3 class="text-center" style="color: ${color};">Grade: ${grade}</h3>
+        <p class="text-center fs-5" style="color: \( {color};"> \){message}</p>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
+        </div>
+    `;
 }
 
 loadQuestion();
