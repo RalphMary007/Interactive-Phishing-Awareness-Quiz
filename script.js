@@ -118,14 +118,14 @@ function showResults() {
 
     // CLEAN template literal — no stray braces, no artifacts
     container.innerHTML = `
-        <h1 class="text-center">Quiz Complete!</h1>
-        <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
-        <h3 class="text-center" style="color: \( {color};"> \){grade}</h3>
-        <p class="text-center fs-5" style="color: \( {color};"> \){message}</p>
-        <div class="text-center mt-4">
-            <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
-        </div>
-    `;
+  <h1 class="text-center">Quiz Complete!</h1>
+  <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
+  <h3 class="text-center" style="color: ${color};">${grade}</h3>
+  <p class="text-center fs-5" style="color: ${color};">${message}</p>
+  <div class="text-center mt-4">
+    <button class="btn btn-primary btn-lg" onclick="location.reload()">Retake Quiz</button>
+  </div>
+`;
 }
 
 // Start the quiz
