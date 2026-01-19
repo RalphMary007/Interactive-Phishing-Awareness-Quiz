@@ -116,7 +116,7 @@ function showResults() {
         color = "#dc3545"; // red
     }
 
-    // Clean template literal — no stray braces or text
+    // CLEAN template literal — no stray braces, no artifacts
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
         <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
