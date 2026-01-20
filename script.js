@@ -1,5 +1,5 @@
-// Phishing Awareness Quiz - CLEAN & WORKING VERSION (January 2026 fix)
-// No stray braces, no artifacts, full randomisation, adaptive difficulty
+// Phishing Awareness Quiz
+// Full randomisation, adaptive difficulty
 
 // Question pool
 const allQuestions = [
@@ -91,7 +91,7 @@ function answer(isPhishing) {
     }, 2000);
 }
 
-// FINAL CLEAN RESULTS FUNCTION - no artifacts
+// CLEAN RESULTS - no artifacts, correct syntax
 function showResults() {
     const container = document.querySelector('.card-body');
 
@@ -117,7 +117,6 @@ function showResults() {
         color = "#dc3545";
     }
 
-    // This is the CORRECT, clean template literal
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
         <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
