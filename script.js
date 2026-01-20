@@ -1,7 +1,6 @@
-// Phishing Awareness Quiz
-// Full randomisation, adaptive difficulty
+// === Phishing Awareness Quiz - FINAL CLEAN & TESTED VERSION ===
+// No stray braces, no \), no artifacts in results
 
-// Question pool
 const allQuestions = [
     { text: "Email: 'Your account is suspended. Click to verify.' From unknown sender.", isPhishing: true, difficulty: 'easy' },
     { text: "Bank statement from official email.", isPhishing: false, difficulty: 'easy' },
@@ -31,7 +30,6 @@ const allQuestions = [
     { text: "System update notification.", isPhishing: false, difficulty: 'hard' }
 ];
 
-// Shuffle function
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -40,14 +38,12 @@ function shuffle(array) {
     return array;
 }
 
-// Shuffle once
 let shuffledQuestions = shuffle([...allQuestions]);
 
 let currentQuestion = 0;
 let score = 0;
 const totalQuestions = 20;
 
-// Load question
 function loadQuestion() {
     if (currentQuestion < totalQuestions) {
         if (currentQuestion >= 6 && score / currentQuestion > 0.7) {
@@ -91,7 +87,6 @@ function answer(isPhishing) {
     }, 2000);
 }
 
-// CLEAN RESULTS - no artifacts, correct syntax
 function showResults() {
     const container = document.querySelector('.card-body');
 
@@ -117,6 +112,7 @@ function showResults() {
         color = "#dc3545";
     }
 
+    // CLEAN template literal - correct syntax, no stray braces or backslashes
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
         <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
