@@ -1,7 +1,9 @@
-// === Phishing Awareness Quiz - FINAL CLEAN & TESTED VERSION ===
-// No stray braces, no \), no artifacts in results
+// Phishing Awareness Quiz - FINAL CLEAN & TESTED VERSION
+// Full randomisation, adaptive difficulty, graded results with no artifacts
 
+// Question pool (24 questions: 8 easy, 8 medium, 8 hard)
 const allQuestions = [
+    // Easy
     { text: "Email: 'Your account is suspended. Click to verify.' From unknown sender.", isPhishing: true, difficulty: 'easy' },
     { text: "Bank statement from official email.", isPhishing: false, difficulty: 'easy' },
     { text: "Urgent: Tax refund available. Provide details.", isPhishing: true, difficulty: 'easy' },
@@ -11,6 +13,7 @@ const allQuestions = [
     { text: "Update payment info or lose access.", isPhishing: true, difficulty: 'easy' },
     { text: "Transaction alert from app.", isPhishing: false, difficulty: 'easy' },
 
+    // Medium
     { text: "Spoofed bank transfer request with urgent language.", isPhishing: true, difficulty: 'medium' },
     { text: "Legitimate loan offer from known lender.", isPhishing: false, difficulty: 'medium' },
     { text: "Investment opportunity with high returns.", isPhishing: true, difficulty: 'medium' },
@@ -20,6 +23,7 @@ const allQuestions = [
     { text: "Charity donation request post-disaster.", isPhishing: true, difficulty: 'medium' },
     { text: "Policy update email.", isPhishing: false, difficulty: 'medium' },
 
+    // Hard
     { text: "AI-generated deepfake voice call requesting transfer.", isPhishing: true, difficulty: 'hard' },
     { text: "Official regulatory compliance email.", isPhishing: false, difficulty: 'hard' },
     { text: "Vishing call mimicking bank fraud dept.", isPhishing: true, difficulty: 'hard' },
@@ -30,6 +34,7 @@ const allQuestions = [
     { text: "System update notification.", isPhishing: false, difficulty: 'hard' }
 ];
 
+// Fisher-Yates shuffle function (randomises order every page load)
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -38,14 +43,17 @@ function shuffle(array) {
     return array;
 }
 
+// Shuffle the full question list once when page loads
 let shuffledQuestions = shuffle([...allQuestions]);
 
 let currentQuestion = 0;
 let score = 0;
-const totalQuestions = 20;
+const totalQuestions = 20; // We use the first 20 from the shuffled pool
 
+// Load the next question
 function loadQuestion() {
     if (currentQuestion < totalQuestions) {
+        // Adaptive difficulty: after question 6, if score >70%, prefer harder questions
         if (currentQuestion >= 6 && score / currentQuestion > 0.7) {
             const remaining = shuffledQuestions.slice(currentQuestion);
             const hardRemaining = remaining.filter(q => q.difficulty === 'hard');
@@ -53,6 +61,7 @@ function loadQuestion() {
                 const randomIndex = currentQuestion + Math.floor(Math.random() * remaining.length);
                 if (shuffledQuestions[randomIndex].difficulty === 'hard') {
                     document.getElementById('question').textContent = shuffledQuestions[randomIndex].text;
+                    // Swap to current position for smooth flow
                     [shuffledQuestions[currentQuestion], shuffledQuestions[randomIndex]] = 
                     [shuffledQuestions[randomIndex], shuffledQuestions[currentQuestion]];
                 } else {
@@ -70,10 +79,12 @@ function loadQuestion() {
     updateProgress();
 }
 
+// Update progress bar
 function updateProgress() {
     document.getElementById('progress-bar').style.width = (currentQuestion / totalQuestions * 100) + '%';
 }
 
+// Handle user answer
 function answer(isPhishing) {
     const current = shuffledQuestions[currentQuestion];
     const correct = current.isPhishing === isPhishing;
@@ -87,6 +98,7 @@ function answer(isPhishing) {
     }, 2000);
 }
 
+// Show final results (clean template literal - no stray characters or backslashes)
 function showResults() {
     const container = document.querySelector('.card-body');
 
@@ -112,7 +124,6 @@ function showResults() {
         color = "#dc3545";
     }
 
-    // CLEAN template literal - correct syntax, no stray braces or backslashes
     container.innerHTML = `
         <h1 class="text-center">Quiz Complete!</h1>
         <p class="lead text-center">Your Score: <strong>${score}</strong> out of ${totalQuestions}</p>
