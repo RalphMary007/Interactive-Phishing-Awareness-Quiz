@@ -1,137 +1,97 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0d6efd, #00c6ff);
-    color: #333;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0d6efd, #00c6ff);
+  color: #333;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.container {
-    max-width: 900px;
-    width: 100%;
-}
+.container { max-width: 900px; width: 100%; }
 
 .card {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    background: #ffffff;
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
 }
 
-.card-body {
-    padding: 2.5rem;
-}
+.card-body { padding: 2.5rem; }
 
 .card-title {
-    color: #0d6efd;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
+  color: #0d6efd;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .lead {
-    font-size: 1.4rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    color: #333;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
 .d-grid .btn {
-    padding: 16px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+  padding: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
+.d-grid .btn:focus {
+  outline: 3px solid #0d6efd;
+  outline-offset: 2px;
 }
 
-.btn-danger:hover {
-    background-color: #c82333;
-    transform: translateY(-2px);
-}
+.btn-danger { background-color: #dc3545; border-color: #dc3545; }
+.btn-danger:hover { background-color: #c82333; transform: translateY(-2px); }
 
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-}
+.btn-success { background-color: #28a745; border-color: #28a745; }
+.btn-success:hover { background-color: #218838; transform: translateY(-2px); }
 
 #feedback {
-    font-size: 1.5rem;
-    font-weight: bold;
-    min-height: 2rem;
-    animation: fadeIn 0.6s ease-in-out;
+  font-size: 1.5rem;
+  font-weight: bold;
+  min-height: 2rem;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
+#feedback.text-success { color: #28a745; }
+#feedback.text-danger { color: #dc3545; }
+
 .progress {
-    height: 12px;
-    border-radius: 10px;
-    background-color: #e9ecef;
-    margin: 1.5rem 0;
+  height: 12px;
+  border-radius: 10px;
+  background-color: #e9ecef;
+  margin: 1.5rem 0;
 }
 
 .progress-bar {
-    background: linear-gradient(to right, #0d6efd, #00c6ff);
-    transition: width 0.4s ease;
+  background: linear-gradient(to right, #0d6efd, #00c6ff);
+  transition: width 0.4s ease;
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.6);
 }
 
-.mt-2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-}
+h1.text-center { color: #0d6efd; margin-bottom: 1.5rem; }
+h3.text-center { font-size: 2.5rem; font-weight: bold; margin: 1.5rem 0 1rem; }
 
-/* Final results screen */
-.quiz-complete h1 {
-    color: #0d6efd;
-    margin-bottom: 1.5rem;
-}
+.fs-5 { font-size: 1.35rem; line-height: 1.6; margin-bottom: 2.5rem; }
 
-.grade {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 1.5rem 0 1rem;
-}
-
-.message {
-    font-size: 1.35rem;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-}
-
-.btn-retake {
-    padding: 14px 50px;
-    font-size: 1.3rem;
-}
+.btn-primary.btn-lg { padding: 14px 50px; font-size: 1.3rem; }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 576px) {
-    .card-body {
-        padding: 1.8rem;
-    }
-    .lead {
-        font-size: 1.25rem;
-    }
-    .grade {
-        font-size: 2rem;
-    }
-    .btn {
-        font-size: 1.1rem;
-        padding: 14px;
-    }
+  .card-body { padding: 1.8rem; }
+  .lead { font-size: 1.25rem; }
+  h3.text-center { font-size: 2rem; }
+  .d-grid .btn { font-size: 1rem; padding: 12px; width: 100%; }
 }
